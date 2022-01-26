@@ -28,41 +28,7 @@ sillaImage.src = "assets/images/sillazo.png"
 
 
 // CLASES
-class Background{
-    constructor(){
-        this.x = 0;
-        this.y = 0;
-        this.width = canvas.width;
-        this.height = canvas.height;
-        this.image = new Image();
-        this.image.src = "assets/images/background3.png"
-        
-    }   
 
-    draw() {
-        this.x -= 1;
-        if(this.x < -canvas.width){
-            this.x = 0
-        }
-        ctx.drawImage(this.image,this.x,this.y, this.width,this.height)
-        ctx.drawImage(
-            this.image,
-            this.x + this.width, 
-            this.y ,
-            this.width,
-            this.height)    
-        }
-    
-    gameOver(){
-        ctx.fillStyle="white"
-        ctx.font = "100px Arial"
-        ctx.fillText("GAME OVER",150,200)
-        audio1.play()
-        ctx.font = "50px Arial"
-        ctx.fillText(`Your score: ${ Math.round(frames/25)} `,150,300)
-        audio1.play()
-                        
-}}
 
 class Character {
     constructor(x,y,w,h,img){
@@ -152,12 +118,49 @@ class Item {
         }
     }
 
+    class Background{
+        constructor(){
+            this.x = 0;
+            this.y = 0;
+            this.width = canvas.width;
+            this.height = canvas.height;
+            this.image = new Image();
+            this.image.src = "assets/images/background3.png"
+            
+        }   
+    
+        draw() {
+            this.x -= 1;
+            if(this.x < -canvas.width){
+                this.x = 0
+            }
+            ctx.drawImage(this.image,this.x,this.y, this.width,this.height)
+            ctx.drawImage(
+                this.image,
+                this.x + this.width, 
+                this.y ,
+                this.width,
+                this.height)    
+            }
+        
+        gameOver(){
+            ctx.fillStyle="white"
+            ctx.font = "100px Arial"
+            ctx.fillText("GAME OVER",150,150)
+            audio1.play()
+            ctx.font = "50px Arial"
+            ctx.fillText(`Your score: ${ Math.round(frames/25)} `,150,300)
+            
+                            
+    }}
+
+
 
 
 
 // INSTANCIAS
 const background = new Background()
-const luchador = new Luchador(100,canvas.height/2,40,80)
+const luchador = new Luchador(100,canvas.height/2,35,70)
 
 
 
@@ -176,8 +179,8 @@ function updateCanvas(){
       ctx.clearRect(0,0,canvas.width, canvas.height)
     background.draw()
     luchador.draw()
-    score()
     corazones()
+    score()
     generateEnemies()
     drawEnemies()
     lanzarSillas()
@@ -204,7 +207,7 @@ buttonStart.addEventListener("click",startGame)
 
         let y = Math.floor(Math.random() * (canvas.height - 80) ) + 15
         let imgRand = Math.floor(Math.random() * imageEnemies.length)
-        const enemy = new Enemy (canvas.width,y,60,70,imageEnemies[imgRand])
+        const enemy = new Enemy (canvas.width,y,45,55,imageEnemies[imgRand])
         enemies.push(enemy)
     
     }}
@@ -243,10 +246,7 @@ function drawEnemies(){
         })}
 
     
-            //sacar la bala si se sale del canvas
-            // if(silla.x + silla.width >= 800){
-            //     sillas.splice(index_silla,1)
-            // }
+   
         
     
 
@@ -268,15 +268,17 @@ function score(){
     ctx.drawImage(vida,0,5,60,30)
     ctx.fillStyle="white"
     ctx.font = '20 px Arial';
-    ctx.fillText(`X ${luchador.vidas}`, 60,30); // hay que meterle un if o un switch para que vayan bajando las vidas
+    ctx.fillText(`X ${luchador.vidas}`, 60,30); 
   }
 
 
 // STATUS
 function statusCheck() {
     if (luchador.vidas <= 0 ) {
-        background.gameOver()
-        requestAnimationFrame = null
+        setTimeout(background.gameOver(),800)
+        setTimeout(requestAnimationFrame = null,800)
+        
+          
   }}
 
 
