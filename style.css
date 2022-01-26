@@ -1,4 +1,6 @@
 
+
+
 #titulo{
     font-size: 80px;
     font-family:"AR JULIAN" ;
@@ -8,10 +10,37 @@
 }
 
 footer{
-    font-size: 30px;
-    color: white;
+    font-size: 50px;
+    color: rgb(180, 12, 12);
 
 }
+
+#relleno{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+}
+
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.teclas{
+    font-size: 40px;
+    text-align: center;
+    color: white;
+    margin-right: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
 
 
 #myCanvas {
@@ -23,8 +52,10 @@ footer{
     margin:auto;
 }
 
-body {background-image: url(assets/images/ring.jpg) ;}
-
+body {
+    background-image: url(assets/images/ring.jpg) ;
+    
+}
 
 
 
@@ -35,6 +66,10 @@ body {background-image: url(assets/images/ring.jpg) ;}
     color: rgb(246, 246, 246);
     text-align: center;
     border: black;
+    border-radius: 10px;
+ 
+    margin-right: 80px;
+
     cursor: pointer;
   }
   .btn-1:hover {

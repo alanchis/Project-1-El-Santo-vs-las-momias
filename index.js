@@ -1,4 +1,3 @@
-
 //CONEXION AL CANVAS
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
@@ -25,10 +24,12 @@ const sillaImage = new Image()
 sillaImage.src = "assets/images/sillazo.png"
 
 
+
+
+
 // CLASES
 class Background{
     constructor(){
-     
         this.x = 0;
         this.y = 0;
         this.width = canvas.width;
@@ -57,9 +58,10 @@ class Background{
         ctx.font = "100px Arial"
         ctx.fillText("GAME OVER",150,200)
         audio1.play()
-        
-        
-        
+        ctx.font = "50px Arial"
+        ctx.fillText(`Your score: ${ Math.round(frames/25)} `,150,300)
+        audio1.play()
+                        
 }}
 
 class Character {
@@ -94,15 +96,11 @@ class Luchador extends Character{
         super(x, y, w, h)
       this.image = new Image()
       this.image.src = "assets/images/luchador.png"  
-      this.vidas = 5
+      this.vidas = 3
     }
-
     draw(){
       ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
     }
-
-
-
   }
 
 
@@ -155,6 +153,8 @@ class Item {
     }
 
 
+
+
 // INSTANCIAS
 const background = new Background()
 const luchador = new Luchador(100,canvas.height/2,40,80)
@@ -183,7 +183,6 @@ function updateCanvas(){
     lanzarSillas()
     statusCheck()
     
-
 if(requestID){
     requestID = requestAnimationFrame(updateCanvas)
     }
@@ -196,12 +195,14 @@ if(requestID){
 buttonStart.addEventListener("click",startGame)
 
 
+
+
   // GENERAR ENEMIGOS
   function generateEnemies(){
    
-    if(frames % 370===0 || frames % 200 === 0 ){
+    if(frames % 320===0 || frames % 200 === 0 || frames % 135 === 0 ){
 
-        let y = Math.floor(Math.random() * (410 - 50) ) + 15
+        let y = Math.floor(Math.random() * (canvas.height - 80) ) + 15
         let imgRand = Math.floor(Math.random() * imageEnemies.length)
         const enemy = new Enemy (canvas.width,y,60,70,imageEnemies[imgRand])
         enemies.push(enemy)
@@ -241,22 +242,13 @@ function drawEnemies(){
 
         })}
 
-
-
-
-
     
-
-
             //sacar la bala si se sale del canvas
             // if(silla.x + silla.width >= 800){
             //     sillas.splice(index_silla,1)
             // }
         
     
-
-
-
 
 
 //SCORE
@@ -282,7 +274,7 @@ function score(){
 
 // STATUS
 function statusCheck() {
-    if (luchador.vidas < 0 ) {
+    if (luchador.vidas <= 0 ) {
         background.gameOver()
         requestAnimationFrame = null
   }}
