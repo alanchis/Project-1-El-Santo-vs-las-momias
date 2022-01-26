@@ -21,7 +21,7 @@ const imageEnemies = ["assets/images/momia_v1.png","assets/images/momia_v2.png",
 
 const sillas = []
 const sillaImage = new Image()
-sillaImage.src = "assets/images/sillazo.png"
+sillaImage.src = "assets/images/kemonito.png"
 
 
 
@@ -112,7 +112,7 @@ class Item {
             super(width, height, img, positionX, positionY, speedX, speedY);
         }
         draw() {
-            this.position.x += this.speed.x;
+            this.position.x += this.speed.x * 0.6;
             this.position.y += this.speed.y;
             ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
         }
@@ -160,7 +160,7 @@ class Item {
 
 // INSTANCIAS
 const background = new Background()
-const luchador = new Luchador(100,canvas.height/2,35,70)
+const luchador = new Luchador(100,canvas.height/2,40,75)
 
 
 
@@ -312,7 +312,7 @@ addEventListener("keydown",(event) => {
             }}
 
             //disparar (space)
-    if (event.keyCode === 32){
+    if (event.keyCode === 83){
             console.log("dispara una silla")
             sillas.push(new Silla(40,40,sillaImage.src,luchador.x, luchador.y+25,3,0))
             audio.play()
