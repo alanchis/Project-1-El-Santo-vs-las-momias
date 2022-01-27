@@ -15,13 +15,20 @@ audio.src = "assets/audio/pop.mp3"
 let audio1 = new Audio ()
 audio1.src ="assets/audio/gameover.mp3"
 audio1.loop = false
+let audio2 = new Audio ()
+audio2.src ="assets/audio/win.mp3"
+audio2.loop = false
+
+
+
+
 
 const enemies =[]
 const imageEnemies = ["assets/images/momia_v1.png","assets/images/momia_v2.png","assets/images/mummy3.png","assets/images/mummy4.png","assets/images/mummy5.png"]
 
-const sillas = []
-const sillaImage = new Image()
-sillaImage.src = "assets/images/kemonito.png"
+const kemonitos = []
+const kemonitoImage = new Image()
+kemonitoImage.src = "assets/images/kemonito.png"
 
 
 
@@ -41,8 +48,8 @@ class Character {
     }
 
     draw(){
-        if(frames % 10 === 0) {
-            this.x -= 10;
+        if(frames % 1 === 0) {
+            this.x -= 3;
         }
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
     }
@@ -93,7 +100,7 @@ class Item {
         };
     }
     draw() {
-        this.position.x += this.speed.x;
+        this.position.x += this.speed.x ;
         this.position.y += this.speed.y;
         ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
         }
@@ -107,7 +114,7 @@ class Item {
         }
     }
     
-    class Silla extends Item {
+    class Kemonito extends Item {
         constructor(width, height, img, positionX, positionY, speedX, speedY) {
             super(width, height, img, positionX, positionY, speedX, speedY);
         }
@@ -150,9 +157,16 @@ class Item {
             audio1.play()
             ctx.font = "50px Arial"
             ctx.fillText(`Your score: ${ Math.round(frames/25)} `,150,300)
+        }
+
+        win(){
+            ctx.fillStyle="white"
+            ctx.font = "100px Arial"
+            ctx.fillText("YOU WIN",150,150)
+        }
             
                             
-    }}
+    }
 
 
 
@@ -183,8 +197,9 @@ function updateCanvas(){
     score()
     generateEnemies()
     drawEnemies()
-    lanzarSillas()
+    lanzarKemonitos()
     statusCheck()
+    winTheGame()
     
 if(requestID){
     requestID = requestAnimationFrame(updateCanvas)
@@ -203,7 +218,7 @@ buttonStart.addEventListener("click",startGame)
   // GENERAR ENEMIGOS
   function generateEnemies(){
    
-    if(frames % 320===0 || frames % 200 === 0 || frames % 135 === 0 ){
+    if(frames % 320===0 || frames % 200 === 0 || frames % 135 === 0 || frames % 423 === 0 ){
 
         let y = Math.floor(Math.random() * (canvas.height - 80) ) + 15
         let imgRand = Math.floor(Math.random() * imageEnemies.length)
@@ -227,13 +242,13 @@ function drawEnemies(){
             enemies.splice(index_enemy,1)
         }
 
-    sillas.forEach((silla,index_silla) => {
-        silla.draw()
+        kemonitos.forEach((kemonito,index_kemonito) => {
+            kemonito.draw()
     
-        if(silla.collision(enemy)){
+        if(kemonito.collision(enemy)){
             console.log("se muere una momia")
             enemies.splice(index_enemy,1)
-            sillas.splice(index_silla,1)
+            kemonitos.splice(index_kemonito,1)
             }})
 
 
@@ -242,6 +257,9 @@ function drawEnemies(){
             luchador.vidas --
             console.log(enemies)
             }
+
+     
+
 
         })}
 
@@ -275,11 +293,22 @@ function score(){
 // STATUS
 function statusCheck() {
     if (luchador.vidas <= 0 ) {
-        setTimeout(background.gameOver(),800)
-        setTimeout(requestAnimationFrame = null,800)
+        background.gameOver()
+        requestAnimationFrame = null
         
           
   }}
+
+
+// WIN THE GAME
+ function winTheGame(){ 
+     let puntos = Math.round(frames/25)
+  if (puntos === 40){
+    background.win()
+    audio2.play()
+    requestAnimationFrame = null
+  }}
+
 
 
 
@@ -311,22 +340,25 @@ addEventListener("keydown",(event) => {
               luchador.y +=20  
             }}
 
-            //disparar (space)
+            //disparar (s)
     if (event.keyCode === 83){
-            console.log("dispara una silla")
-            sillas.push(new Silla(40,40,sillaImage.src,luchador.x, luchador.y+25,3,0))
+
+            console.log("dispara un kemonito")
+            kemonitos.push(new Kemonito(40,40,kemonitoImage.src,luchador.x, luchador.y+25,3,0))
             audio.play()
         }
     })
 
    
 
-// DISPARAR SILLAZOS
-    function lanzarSillas() {
-        sillas.forEach((silla, silla_index) => {
-            silla.draw();
-            if (silla.position.y + silla.height <= 0) {
-                sillas.splice(silla_index, 1);
+// DISPARAR KEMONITOS
+    function lanzarKemonitos() {
+        kemonitos.forEach((kemonito, kemonito_index) => {
+            kemonito.draw();
+            if (kemonito.position.y + kemonito.height <= 0) {
+                kemonitos.splice(kemonito_index, 1);
             }
         });
     }
+
+
